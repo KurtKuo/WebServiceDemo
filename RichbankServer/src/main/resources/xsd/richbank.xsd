@@ -1,0 +1,11 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://richbank.com.example.richbank/"
+           xmlns="http://richbank.com.example.richbank/"
+           elementFormDefault="qualified">
+
+    <xs:include schemaLocation="request/order-time-sch-request.xsd"/>
+    <xs:include schemaLocation="request/query-ser-group-request.xsd"/>
+    <xs:include schemaLocation="response/order-time-sch-response.xsd"/>
+    <xs:include schemaLocation="response/query-ser-group-response.xsd"/>
+
+</xs:schema>

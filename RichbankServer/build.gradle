@@ -1,0 +1,94 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    jaxb
+}
+
+ext.generatedDir = "$projectDir/src/main/java"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    implementation 'wsdl4j:wsdl4j'
+
+    implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.5'
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
+
+    jaxb 'org.glassfish.jaxb:jaxb-xjc:4.0.5'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+def scanAndCreateXjcTasksByFunction(String requestPath, String responsePath, String basePackage) {
+    def requestDir = file(requestPath)
+    def responseDir = file(responsePath)
+
+    if (!requestDir.exists() || !responseDir.exists()) return
+
+    def requestFiles = fileTree(requestDir).matching { include '**/*Request.xsd' }
+    def responseFiles = fileTree(responseDir).matching { include '**/*Response.xsd' }
+
+    // 將所有檔案依功能名稱分組
+    def groupedFiles = [:].withDefault { [] }
+
+    requestFiles.each { file ->
+        def name = file.name.replaceFirst(/Request\.xsd$/, '')
+        groupedFiles[name] << file
+    }
+
+    responseFiles.each { file ->
+        def name = file.name.replaceFirst(/Response\.xsd$/, '')
+        groupedFiles[name] << file
+    }
+
+    // 為每個功能建立 task
+    groupedFiles.each { functionName, files ->
+        def taskName = "generate${functionName}Xsd"
+        def packageName = "${basePackage}.${functionName[0].toLowerCase()}${functionName.substring(1)}"
+
+        tasks.register(taskName, JavaExec) {
+            group = 'build'
+            description = "Generate JAXB classes for $functionName"
+            classpath = configurations.jaxb
+            mainClass.set('com.sun.tools.xjc.XJCFacade')
+
+            doFirst {
+                args = ['-d', generatedDir, '-p', packageName] + files.collect { it.absolutePath }
+            }
+        }
+
+        tasks.named("generateAllXsd") {
+            dependsOn taskName
+        }
+    }
+}
+
+tasks.register("generateAllXsd")
+
+scanAndCreateXjcTasksByFunction(
+    "src/main/resources/xsd/request",
+    "src/main/resources/xsd/response",
+    "com.example.richbank.request"
+)
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
