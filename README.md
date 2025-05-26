@@ -38,7 +38,7 @@
     </soap:Body>
 </soap:Envelope>
 
-
+## 📤 Response 範例（RS）
 
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
     <SOAP-ENV:Header/>
