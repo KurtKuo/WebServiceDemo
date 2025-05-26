@@ -138,11 +138,105 @@ cd RichbankServer
 
 使用自動化 Gradle 任務產生：
 ./gradlew generateAllXsd
+```
 
 
 啟動server
 ./gradlew bootRun
 
+# 🏦 RichbankClient - SOAP WebService Client
+
+Spring Boot 專案，用來呼叫 RichbankServer 提供的 SOAP Web Services 並將結果轉為 JSON API，方便整合前端或其他系統。
+
+---
+
+## 📌 專案架構
+```
+richbankclient/
+├── client/ # 呼叫 SOAP WebService 的實作
+│ ├── OrderTimeSchClient.java
+│ └── QuerySerGroupClient.java
+├── dto/ # 請求與回應 DTO（自訂格式）
+│ ├── OrderTimeSchRequestDto.java
+│ ├── OrderTimeSchResponseDto.java
+│ ├── QuerySerGroupRequestDto.java
+│ └── QuerySerGroupResponseDto.java
+├── service/ # 商業邏輯封裝層
+│ ├── OrderTimeSchService.java
+│ └── QuerySerGroupService.java
+├── controller/ # 提供 REST API 給前端或第三方
+│ └── SoapController.java
+├── config/ # SOAP WebServiceTemplate 設定
+│ └── SoapClientConfig.java
+├── common/ # 公用工具
+│ └── SoapToDtoMapper.java
+└── ws/ # SOAP 生成的 Java 類別（來自 XSD）
+├── orderTimeSch/
+└── querySerGroup/
+```
+
+---
+
+## ⚙️ 技術細節
+
+### 1. `SoapClientConfig.java` - 配置 WebServiceTemplate
+
+```java
+@Bean
+public Jaxb2Marshaller marshaller() {
+    Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+    marshaller.setPackagesToScan(
+        "com.example.richbankclient.ws.orderTimeSch",
+        "com.example.richbankclient.ws.querySerGroup"
+    );
+    return marshaller;
+}
+
+@Bean
+public WebServiceTemplate webServiceTemplate(Jaxb2Marshaller marshaller) {
+    WebServiceTemplate template = new WebServiceTemplate();
+    template.setMarshaller(marshaller);
+    template.setUnmarshaller(marshaller);
+    return template;
+}
+```
+3. DTO Mapper 封裝
+將 SOAP 回應封裝成自訂格式：
+```java
+public static QuerySerGroupResponseDto mapToQuerySerGroupResponseDto(QuerySerGroupResponse response) {
+    // 將 SOAP 物件結構轉為乾淨的 JSON DTO 結構
+}
+```
+✅ 功能成果
+✅ 成功串接兩組 SOAP WebService（QuerySerGroup 與 OrderTimeSch）
+
+✅ SOAP 請求/回應封裝完整
+
+✅ 回應轉換成自訂 DTO（易於整合與前端溝通）
+
+✅ 使用 REST API 提供外部 JSON 呼叫介面
+
+✅ 採用分層設計：Controller / Service / Client / DTO / Mapper
+
+🔜 建議未來擴充
+☑️ 加入 logging，記錄每次請求與回應
+
+☑️ 增加錯誤處理（ex: SOAP Fault ➜ JSON 錯誤回傳）
+
+☑️ 將 endpoint URL 與設定改為 application.yml
+
+☑️ 加入測試（Unit Test & Integration Test）
+
+☑️ 每個 SOAP Client 可以使用獨立 WebServiceTemplate（如有需要）
+
+📎 附註
+Java 版本：17+
+
+Spring Boot 版本：3.4.5
+
+使用 Jaxb2Marshaller 對應 XSD 產生的 Java 類別
+
+以 WebServiceTemplate 進行 SOAP 呼叫
 
 
 
