@@ -1,11 +1,10 @@
 package com.example.richbank.init;
 
 
+import com.example.richbank.ws.querySerGroup.QuerySerGroupDataType;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupResponseType;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
-
-import com.example.richbank.request.querySerGroup.QuerySerGroupDataType;
-import com.example.richbank.request.querySerGroup.QuerySerGroupResponseType;
 
 import java.util.ArrayList;
 import java.util.List;

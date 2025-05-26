@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://richbank.com.example.richbank/"
+           xmlns="http://richbank.com.example.richbank/"
+           elementFormDefault="qualified">
+
+    <!-- 定義 Data 型別 -->
+    <xs:complexType name="OrderTimeDataType">
+        <xs:sequence>
+            <xs:element name="OrderDate" type="xs:string" />
+            <xs:element name="OrderSTime" type="xs:string" />
+            <xs:element name="OrderETime" type="xs:string" />
+            <xs:element name="CurrentCnt" type="xs:int" />
+            <xs:element name="MaxCnt" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定義 Group 型別 -->
+    <xs:complexType name="OrderTimeGroupType">
+        <xs:sequence>
+            <xs:element name="Data" type="OrderTimeDataType" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定義 Response 型別 -->
+    <xs:complexType name="OrderTimeResponseType">
+        <xs:sequence>
+            <xs:element name="Code" type="xs:string" />
+            <xs:element name="Desc" type="xs:string" />
+            <xs:element name="TxSeq" type="xs:string" />
+            <xs:element name="DateTime" type="xs:string" />
+            <xs:element name="Over" type="xs:int" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定義 MegaSilver 型別 -->
+    <xs:complexType name="OrderTimeMegaSilverType">
+        <xs:sequence>
+            <xs:element name="Response" type="OrderTimeResponseType"/>
+            <xs:element name="Group" type="OrderTimeGroupType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定義 OrderTimeSchResult 元素 -->
+    <xs:element name="OrderTimeSchResult">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="MegaSilver" type="OrderTimeMegaSilverType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- 定義 OrderTimeSchResponse 元素 -->
+    <xs:element name="OrderTimeSchResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="OrderTimeSchResult"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: RichbankClient
+
+server:
+  port: 8050

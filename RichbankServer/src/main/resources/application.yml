@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: RichbankServer
+
+server:
+  port: 8060

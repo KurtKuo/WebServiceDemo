@@ -1,21 +1,20 @@
 package com.example.richbank.endpoint;
 
-import java.util.List;
-
+import com.example.richbank.ws.querySerGroup.QuerySerGroup;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupDataType;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupGroupType;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupMegaSilverType;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupResponse;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupResponseType;
+import com.example.richbank.ws.querySerGroup.QuerySerGroupResultType;
+import com.example.richbank.init.InitDataRichbankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.example.richbank.init.InitDataRichbankService;
-import com.example.richbank.request.querySerGroup.QuerySerGroup;
-import com.example.richbank.request.querySerGroup.QuerySerGroupDataType;
-import com.example.richbank.request.querySerGroup.QuerySerGroupGroupType;
-import com.example.richbank.request.querySerGroup.QuerySerGroupMegaSilverType;
-import com.example.richbank.request.querySerGroup.QuerySerGroupResponse;
-import com.example.richbank.request.querySerGroup.QuerySerGroupResponseType;
-import com.example.richbank.request.querySerGroup.QuerySerGroupResultType;
+import java.util.List;
 
 @Endpoint
 public class RichbankEndpoint {

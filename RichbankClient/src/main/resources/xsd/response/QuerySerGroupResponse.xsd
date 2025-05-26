@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://richbank.com.example.richbank/"
+           xmlns:tns="http://richbank.com.example.richbank/"
+           elementFormDefault="qualified">
+
+    <!-- Data -->
+    <xs:complexType name="QuerySerGroupDataType">
+        <xs:sequence>
+            <xs:element name="GroupID" type="xs:string"/>
+            <xs:element name="Name" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Group -->
+    <xs:complexType name="QuerySerGroupGroupType">
+        <xs:sequence>
+            <xs:element name="Data" type="tns:QuerySerGroupDataType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Response -->
+    <xs:complexType name="QuerySerGroupResponseType">
+        <xs:sequence>
+            <xs:element name="Code" type="xs:string"/>
+            <xs:element name="Desc" type="xs:string"/>
+            <xs:element name="TxSeq" type="xs:string"/>
+            <xs:element name="DateTime" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- MegaSilver -->
+    <xs:complexType name="QuerySerGroupMegaSilverType">
+        <xs:sequence>
+            <xs:element name="Response" type="tns:QuerySerGroupResponseType"/>
+            <xs:element name="Group" type="tns:QuerySerGroupGroupType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Result Type -->
+    <xs:complexType name="QuerySerGroupResultType">
+        <xs:sequence>
+            <xs:element name="MegaSilver" type="tns:QuerySerGroupMegaSilverType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 最外層 -->
+    <xs:element name="QuerySerGroupResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="QuerySerGroupResult" type="tns:QuerySerGroupResultType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

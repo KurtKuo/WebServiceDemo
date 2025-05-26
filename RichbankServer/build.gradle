@@ -70,6 +70,10 @@ def scanAndCreateXjcTasksByFunction(String requestPath, String responsePath, Str
             classpath = configurations.jaxb
             mainClass.set('com.sun.tools.xjc.XJCFacade')
 
+            systemProperties = [
+                    'file.encoding': 'UTF-8'
+            ]
+
             doFirst {
                 args = ['-d', generatedDir, '-p', packageName] + files.collect { it.absolutePath }
             }
@@ -86,7 +90,7 @@ tasks.register("generateAllXsd")
 scanAndCreateXjcTasksByFunction(
     "src/main/resources/xsd/request",
     "src/main/resources/xsd/response",
-    "com.example.richbank.request"
+    "com.example.richbank.ws"
 )
 
 tasks.named('test') {

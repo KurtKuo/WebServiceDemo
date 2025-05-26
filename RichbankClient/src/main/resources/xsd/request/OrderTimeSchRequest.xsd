@@ -1,0 +1,18 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://richbank.com.example.richbank/"
+           xmlns="http://richbank.com.example.richbank/"
+           elementFormDefault="qualified">
+
+    <xs:element name="OrderTimeSch">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="TxSeq" type="xs:string"/>
+                <xs:element name="WSID" type="xs:string"/>
+                <xs:element name="ID" type="xs:string"/>
+                <xs:element name="Branch" type="xs:string"/>
+                <xs:element name="OrderDate" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
