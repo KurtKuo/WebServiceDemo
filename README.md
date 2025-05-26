@@ -24,7 +24,7 @@
 
 ## 📤 Request 範例（RQ）
 
-```xml
+```
 <?xml version="1.0" encoding="utf-8"?>
 <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -37,9 +37,11 @@
         </QuerySerGroup>
     </soap:Body>
 </soap:Envelope>
+```
 
 ## 📤 Response 範例（RS）
 
+```
 <SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
     <SOAP-ENV:Header/>
     <SOAP-ENV:Body>
@@ -71,7 +73,7 @@
         </ns2:QuerySerGroupResponse>
     </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
-
+```
 
 
 RichbankServer/
