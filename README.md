@@ -75,7 +75,7 @@
 </SOAP-ENV:Envelope>
 ```
 
-
+```
 RichbankServer/
 ├── src/
 │   ├── main/
@@ -95,6 +95,7 @@ RichbankServer/
 │   │   │   │   │   ├── OrderTimeSchResponse.xsd
 ├── build.gradle
 └── ...
+```
 
 🛠️ 技術說明
 框架：Spring Boot + Spring Web Services
